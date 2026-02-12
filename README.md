@@ -13,7 +13,12 @@
 
 ---
 
-[English](#english) | [繁體中文](#繁體中文)
+<p align="center">
+  <a href="#english"><b>English Edition</b></a> | 
+  <a href="#繁體中文"><b>繁體中文版本</b></a>
+</p>
+
+---
 
 <a name="english"></a>
 ## ✨ Features (English)
@@ -42,6 +47,12 @@ Available at `http://localhost:8080`.
 1. `cd frontend`
 2. `npm install`
 3. `npm run dev`
+
+---
+
+<p align="right">
+  <a href="#繁體中文"><b>切換至中文版本 ➔</b></a>
+</p>
 
 ---
 
