@@ -17,9 +17,6 @@
       
       <div class="actions-divider"></div>
 
-      <button class="btn btn-secondary" @click="$emit('copy')">
-        <Copy :size="16" /> {{ t.copy }}
-      </button>
       <button class="btn btn-secondary" @click="$emit('share')" :title="t.share">
         <Share2 :size="16" /> {{ t.share }}
       </button>
@@ -38,7 +35,7 @@
 </template>
 
 <script setup>
-import { Undo, Redo, Maximize, Copy, Download, Languages, Share2 } from 'lucide-vue-next'
+import { Undo, Redo, Maximize, Download, Languages, Share2 } from 'lucide-vue-next'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -51,7 +48,7 @@ const props = defineProps({
 // Rename to avoid conflict if any, but let's keep it simple
 const currentValueLang = computed(() => props.currentLang)
 
-defineEmits(['undo', 'redo', 'reset-view', 'copy', 'download', 'toggle-lang', 'share'])
+defineEmits(['undo', 'redo', 'reset-view', 'download', 'toggle-lang', 'share'])
 </script>
 
 <style scoped>

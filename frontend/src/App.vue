@@ -123,11 +123,6 @@ const handleGlobalMouseUp = () => {
   isDragging.value = false
 }
 
-const copyToClipboard = async () => {
-  await navigator.clipboard.writeText(code.value)
-  toastRef.value?.show(t.value.copied)
-}
-
 const openShareModal = () => {
   shareUrl.value = getShareUrl()
   isShareModalOpen.value = true
@@ -203,7 +198,6 @@ onUnmounted(() => {
       @undo="undo"
       @redo="redo"
       @reset-view="resetView"
-      @copy="copyToClipboard"
       @share="openShareModal"
       @download="downloadPNG"
       @toggle-lang="toggleLang"
