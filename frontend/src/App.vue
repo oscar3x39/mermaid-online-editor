@@ -12,9 +12,12 @@ import { useUrlState } from './composables/useUrlState'
 // Components
 import Toolbar from './components/Toolbar.vue'
 import CookieBanner from './components/CookieBanner.vue'
+import ShareModal from './components/ShareModal.vue'
+import Toast from './components/Toast.vue'
 import { History as HistoryIcon, X, Trash2, Clock } from 'lucide-vue-next'
 
 const code = ref(EXAMPLES['流程圖'])
+const toastRef = ref(null)
 
 // 1. Language State
 const currentLang = ref(localStorage.getItem('mermaid_lang') || 'zh')
@@ -42,7 +45,10 @@ const {
   mermaidContainer, error, renderDiagram, downloadPNG 
 } = useMermaid(currentTheme)
 
-// 3. State & References
+// 3. UI State
+const isShareModalOpen = ref(false)
+const shareUrl = ref('')
+
 const themes = [
   { id: 'dark', name: '深淵黑' },
   { id: 'sun', name: '陽光白' },
@@ -119,13 +125,12 @@ const handleGlobalMouseUp = () => {
 
 const copyToClipboard = async () => {
   await navigator.clipboard.writeText(code.value)
-  alert(t.value.copied)
+  toastRef.value?.show(t.value.copied)
 }
 
-const shareLink = async () => {
-  const url = getShareUrl()
-  await navigator.clipboard.writeText(url)
-  alert(t.value.shareCopied)
+const openShareModal = () => {
+  shareUrl.value = getShareUrl()
+  isShareModalOpen.value = true
 }
 
 const performClearHistory = () => {
@@ -199,7 +204,7 @@ onUnmounted(() => {
       @redo="redo"
       @reset-view="resetView"
       @copy="copyToClipboard"
-      @share="shareLink"
+      @share="openShareModal"
       @download="downloadPNG"
       @toggle-lang="toggleLang"
     />
@@ -263,8 +268,8 @@ onUnmounted(() => {
         <div class="history-header">
           <span class="section-title"><Clock :size="14" style="margin-right:8px"/> {{ t.historyTitle }}</span>
           <div style="display:flex; gap: 8px">
-            <Trash2 v-if="history.length" :size="16" class="text-muted cursor-pointer" @click="performClearHistory" />
-            <X :size="18" class="text-muted cursor-pointer" @click="isHistoryOpen = false" />
+            <Trash2 v-if="history.length" :size="16" class="text-muted_custom cursor-pointer" @click="performClearHistory" />
+            <X :size="18" class="text-muted_custom cursor-pointer" @click="isHistoryOpen = false" />
           </div>
         </div>
         <div class="history-list">
@@ -289,6 +294,13 @@ onUnmounted(() => {
     </main>
 
     <CookieBanner :t="t" />
+    <ShareModal 
+      :isOpen="isShareModalOpen" 
+      :url="shareUrl" 
+      :t="t" 
+      @close="isShareModalOpen = false" 
+    />
+    <Toast ref="toastRef" />
   </div>
 </template>
 
@@ -302,6 +314,6 @@ onUnmounted(() => {
   border-radius: 9999px;
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
-.text-muted { color: var(--text-muted); transition: color 0.2s; }
-.text-muted:hover { color: var(--text-main); }
+.text-muted_custom { color: var(--text-muted); transition: color 0.2s; }
+.text-muted_custom:hover { color: var(--text-main); }
 </style>

@@ -5,6 +5,10 @@
 [![Mermaid](https://img.shields.io/badge/Mermaid.js-10.9-ff69b4?style=for-the-badge)](https://mermaid.js.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
+## 🌐 Live Demo
+
+🚀 **Experience it live:** [https://mermaid-online-editor-oscar339.vercel.app/](https://mermaid-online-editor-oscar339.vercel.app/)
+
 > **A professional, high-performance Mermaid.js live editor with a premium UI, ultra-lightweight state sharing, and local persistence.**
 
 ## ✨ Features
