@@ -4,16 +4,16 @@ export function useUrlState(code) {
     // Compress and encode to URL-safe Base64
     const encode = (str) => {
         try {
+            if (!str) return '';
             const data = new TextEncoder().encode(str);
             const compressed = pako.deflate(data, { level: 9 });
-            // Convert to binary string
-            let binString = '';
-            const len = compressed.byteLength;
-            for (let i = 0; i < len; i++) {
-                binString += String.fromCharCode(compressed[i]);
-            }
-            // Convert to Base64 and make it URL-safe
-            return btoa(binString)
+
+            // Use a safer way to convert Uint8Array to Base64
+            const binString = Array.from(compressed, (byte) => String.fromCharCode(byte)).join('');
+            const base64 = btoa(binString);
+
+            // Make it URL-safe: Replace +, / and remove =
+            return base64
                 .replace(/\+/g, '-')
                 .replace(/\//g, '_')
                 .replace(/=+$/, '');
@@ -26,13 +26,22 @@ export function useUrlState(code) {
     // Decode from URL-safe Base64 and decompress
     const decode = (base64) => {
         try {
-            // Restore standard Base64
-            let binString = atob(base64.replace(/-/g, '+').replace(/_/g, '/'));
-            const len = binString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
+            if (!base64) return '';
+
+            // Restore standard Base64: Replace - and _ back
+            let str = base64.replace(/-/g, '+').replace(/_/g, '/');
+
+            // Add missing padding (=)
+            while (str.length % 4) {
+                str += '=';
+            }
+
+            const binString = atob(str);
+            const bytes = new Uint8Array(binString.length);
+            for (let i = 0; i < binString.length; i++) {
                 bytes[i] = binString.charCodeAt(i);
             }
+
             const decompressed = pako.inflate(bytes);
             return new TextDecoder().decode(decompressed);
         } catch (e) {
@@ -44,7 +53,11 @@ export function useUrlState(code) {
     const syncUrl = (newCode) => {
         const encoded = encode(newCode);
         if (encoded) {
-            window.history.replaceState(null, '', `#code/${encoded}`);
+            const newHash = `#code/${encoded}`;
+            // Only replace if the hash actually changed to avoid cycles
+            if (window.location.hash !== newHash) {
+                window.history.replaceState(null, '', newHash);
+            }
         }
     };
 
@@ -52,17 +65,19 @@ export function useUrlState(code) {
         const hash = window.location.hash;
         if (hash.startsWith('#code/')) {
             const encoded = hash.substring(6);
-            const decoded = decode(encoded);
-            if (decoded) {
-                code.value = decoded;
-                return true;
+            if (encoded) {
+                const decoded = decode(encoded);
+                if (decoded) {
+                    code.value = decoded;
+                    return true;
+                }
             }
         }
         return false;
     };
 
     const getShareUrl = () => {
-        return window.location.href;
+        return window.location.origin + window.location.pathname + window.location.hash;
     };
 
     return {
