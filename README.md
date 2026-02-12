@@ -112,3 +112,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 Created with ❤️ for the Mermaid community.
+
