@@ -11,7 +11,8 @@
         "vue": "^3.4.0",
         "mermaid": "^10.9.0",
         "lucide-vue-next": "^0.344.0",
-        "pako": "^2.1.0"
+        "pako": "^2.1.0",
+        "brotli-wasm": "^3.0.1"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^5.0.0",

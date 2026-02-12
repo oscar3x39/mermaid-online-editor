@@ -47,7 +47,7 @@ const props = defineProps({
   t: Object
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'copy'])
 
 const copied = ref(false)
 const urlInput = ref(null)
@@ -60,6 +60,7 @@ const copy = async () => {
   try {
     await navigator.clipboard.writeText(props.url)
     copied.value = true
+    emit('copy')
     setTimeout(() => {
       copied.value = false
     }, 2000)

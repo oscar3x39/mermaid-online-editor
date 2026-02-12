@@ -13,6 +13,7 @@ import { useUrlState } from './composables/useUrlState'
 import Toolbar from './components/Toolbar.vue'
 import CookieBanner from './components/CookieBanner.vue'
 import ShareModal from './components/ShareModal.vue'
+import ConfirmModal from './components/ConfirmModal.vue'
 import Toast from './components/Toast.vue'
 import { History as HistoryIcon, X, Trash2, Clock } from 'lucide-vue-next'
 
@@ -47,6 +48,7 @@ const {
 
 // 3. UI State
 const isShareModalOpen = ref(false)
+const isConfirmOpen = ref(false)
 const shareUrl = ref('')
 
 const themes = [
@@ -123,24 +125,38 @@ const handleGlobalMouseUp = () => {
   isDragging.value = false
 }
 
-const openShareModal = () => {
-  shareUrl.value = getShareUrl()
+const openShareModal = async () => {
+  const url = getShareUrl()
+  shareUrl.value = url
+  
+  // Directly copy to clipboard for better UX
+  try {
+    await navigator.clipboard.writeText(url)
+    toastRef.value?.show(t.value.shareCopied)
+  } catch (err) {
+    console.warn('Silent clipboard fail', err)
+  }
+  
   isShareModalOpen.value = true
 }
 
-const performClearHistory = () => {
-  if (confirm(t.value.confirmClear)) {
-    clearAllHistory()
-  }
+const confirmClearHistory = () => {
+  isConfirmOpen.value = true
+}
+
+const handleClearHistory = () => {
+  clearAllHistory()
+  isConfirmOpen.value = false
+  toastRef.value?.show(currentLang.value === 'zh' ? '已清空歷史紀錄' : 'History cleared')
 }
 
 // 5. Watchers & Shortcuts
 let saveTimeout
 let undoTimeout
-watch(code, (newVal) => {
+watch(code, async (newVal) => {
   renderDiagram(newVal)
   persistLatest(newVal)
-  syncUrl(newVal) // Update URL hash in real-time
+  await syncUrl(newVal) // Update URL hash in real-time
 
   clearTimeout(saveTimeout)
   saveTimeout = setTimeout(() => addToHistory(newVal), 3000)
@@ -163,7 +179,7 @@ const handleKeydown = (e) => {
 }
 
 // 6. Lifecycle
-onMounted(() => {
+onMounted(async () => {
   const savedTheme = localStorage.getItem('mermaid_theme') || 'dark'
   setTheme(savedTheme)
   
@@ -171,7 +187,7 @@ onMounted(() => {
   loadHistory()
   
   // 2. Override with URL hash if present (Shared link logic)
-  loadFromUrl()
+  await loadFromUrl()
 
   window.addEventListener('mousemove', handleGlobalMouseMove)
   window.addEventListener('mouseup', handleGlobalMouseUp)
@@ -262,7 +278,7 @@ onUnmounted(() => {
         <div class="history-header">
           <span class="section-title"><Clock :size="14" style="margin-right:8px"/> {{ t.historyTitle }}</span>
           <div style="display:flex; gap: 8px">
-            <Trash2 v-if="history.length" :size="16" class="text-muted_custom cursor-pointer" @click="performClearHistory" />
+            <Trash2 v-if="history.length" :size="16" class="text-muted_custom cursor-pointer" @click="confirmClearHistory" />
             <X :size="18" class="text-muted_custom cursor-pointer" @click="isHistoryOpen = false" />
           </div>
         </div>
@@ -292,7 +308,14 @@ onUnmounted(() => {
       :isOpen="isShareModalOpen" 
       :url="shareUrl" 
       :t="t" 
-      @close="isShareModalOpen = false" 
+      @close="isShareModalOpen = false"
+      @copy="toastRef.value?.show(t.shareCopied)"
+    />
+    <ConfirmModal 
+      :isOpen="isConfirmOpen"
+      :message="t.confirmClear"
+      @confirm="handleClearHistory"
+      @cancel="isConfirmOpen = false"
     />
     <Toast ref="toastRef" />
   </div>

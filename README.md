@@ -24,13 +24,12 @@
 ## ✨ Features (English)
 
 - **🎨 Premium UI/UX**: Inspired by the official Mermaid.live editor. Features a sleek dark mode, refined typography (Inter & JetBrains Mono), and a responsive split-pane layout.
-- **🔗 Zero-Server Sharing**: Share your diagrams via URLs. Uses **Deflate (zlib) compression** to generate short, shareable links without storing any data on a server.
+- **⚡ Ultimate Compression**: Share diagrams via ultra-short URLs powered by **Brotli (WASM)**. Squeezes every byte using advanced dictionary-less compression at Quality 11.
 - **⏳ Smart History & Persistence**: Your work is instantly saved to `LocalStorage`. Includes a dedicated history panel to manage your past versions.
-- **⌨️ Pro Editing Experience**: Full **Undo/Redo (`Ctrl+Z` / `Ctrl+Y`)** support with debounced state grouping.
+- **⌨️ Pro Editing Experience**: Full **Undo/Redo (`Ctrl+Z` / `Ctrl+Y`)** support. No more annoying browser alerts—enjoy custom premium modals and toasts.
 - **🌐 Multi-language Support**: Seamless toggle between **English** and **Chinese (繁體中文)**.
-- **🖼️ High-Quality Export**: Export your diagrams as high-resolution (2x scale) PNGs with theme-aware backgrounds and automatic padding.
+- **🖼️ High-Quality Export**: Export your diagrams as high-resolution (2x scale) PNGs with theme-aware backgrounds.
 - **🔍 Pan & Zoom Preview**: Interactive preview area with mouse wheel scaling and click-and-drag panning.
-- **🍪 GDPR Compliant**: Includes a sleek cookie consent banner for privacy law compliance.
 - **🐳 Docker Ready**: Optimized multi-stage Docker builds for rapid deployment.
 
 ## 🚀 Quick Start
@@ -60,13 +59,12 @@ Available at `http://localhost:8080`.
 ## ✨ 功能特色 (正體中文)
 
 - **🎨 頂級 UI/UX 設計**: 靈感來自官方 Mermaid.live，具備深色模式、精緻字形（Inter & JetBrains Mono）以及響應式的雙面板佈局。
-- **🔗 零伺服器分享**: 透過網址直接分享圖表。使用 **Deflate (zlib) 壓縮技術** 生成精簡的分享連結，完全不經由伺服器存儲數據。
+- **⚡ 極致壓縮分享**: 採用 **Brotli (WebAssembly)** 技術。在前端將圖表代碼以最高等級 (Quality 11) 壓縮，生成極致精簡的分享網址，完全不經由伺服器。
 - **⏳ 智慧歷史與持久化**: 您的代碼會即時保存於瀏覽器的 `LocalStorage`。內置專屬歷史面板，輕鬆管理與回溯過往版本。
-- **⌨️ 專業編輯體驗**: 完整支援 **復原/重做 (`Ctrl+Z` / `Ctrl+Y`)**，並具備智慧輸入分組功能，避免頻繁撤銷。
+- **⌨️ 專業編輯體驗**: 完整支援 **復原/重做 (`Ctrl+Z` / `Ctrl+Y`)**。捨棄醜陋的原生視窗，採用全客製化的精美對話框與通知系統。
 - **🌐 多國語言支援**: 支援 **繁體中文** 與 **英文** 介面的一鍵切換。
-- **🖼️ 高品質圖片導出**: 支援導出 2 倍解析度的高清 PNG，具備主題感應背景與自動留白。
+- **🖼️ 高品質圖片導出**: 支援導出 2 倍解析度的高清 PNG，具備主題感應背景。
 - **🔍 畫布平移與縮放**: 互動式預覽區，支援滑鼠滾輪縮放與點擊拖拽平移。
-- **🍪 符合隱私規範**: 內置磨砂玻璃質感的 Cookie 同意聲明，符合隱私權法律標準。
 - **🐳 Docker 支援**: 優化後的多階段 Docker 構建腳本，支援快速部署。
 
 ## 🚀 快速啟動
@@ -92,8 +90,8 @@ docker-compose up --build -d
 frontend/
 ├── src/
 │   ├── assets/       # 樣式與靜態資源
-│   ├── components/   # 模組化組件 (Toolbar, ShareModal, Toast 等)
-│   ├── composables/  # 邏輯抽離 (歷史、撤銷、網址同步、Mermaid 渲染)
+│   ├── components/   # 模組化組件 (Toolbar, ShareModal, Toast, ConfirmModal 等)
+│   ├── composables/  # 邏輯抽離 (歷史、撤銷、Brotli 壓縮、Mermaid 渲染)
 │   ├── constants/    # 常量配置 (語言翻譯、範例代碼)
 │   ├── App.vue       # 應用程式入口
 │   └── main.js       # 初始化
@@ -105,7 +103,7 @@ frontend/
 
 **我們極度重視您的隱私。本應用在後端是「無狀態」的：**
 - 所有圖表數據均存儲在 **您瀏覽器的本地存儲 (LocalStorage)** 中。
-- 分享連結是將您的代碼壓縮後直接放入網址 Hash 內生成。
+- 分享連結是利用 **Brotli 算法** 壓縮代碼後生成的 Hash，具備高度隱密性。
 - **任何圖表數據都不會被傳送到我們的伺服器，我們也不會存儲任何您的代碼。**
 
 ## 📜 License

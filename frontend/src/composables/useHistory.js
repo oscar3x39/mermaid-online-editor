@@ -48,10 +48,8 @@ export function useHistory(code) {
     };
 
     const clearAllHistory = () => {
-        if (confirm('確定要清空所有歷史紀錄嗎？')) {
-            history.value = [];
-            saveHistory();
-        }
+        history.value = [];
+        saveHistory();
     };
 
     const persistLatest = (val) => {
