@@ -20,6 +20,7 @@ export const TRANSLATIONS = {
         shareCopied: '連結已複製！',
         cookieText: '本站使用 LocalStorage 與 Cookie 來優化您的編輯體驗並保存歷史紀錄。',
         cookieAccept: '我同意',
+        feedback: '意見回饋',
         examples: {
             '流程圖': '流程圖',
             '時序圖': '時序圖',
@@ -50,6 +51,7 @@ export const TRANSLATIONS = {
         shareCopied: 'URL Copied!',
         cookieText: 'This site uses LocalStorage and Cookies to enhance your experience and save your work.',
         cookieAccept: 'Got it',
+        feedback: 'Feedback',
         examples: {
             '流程圖': 'Flowchart',
             '時序圖': 'Sequence',

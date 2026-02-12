@@ -15,6 +15,7 @@ import CookieBanner from './components/CookieBanner.vue'
 import ShareModal from './components/ShareModal.vue'
 import ConfirmModal from './components/ConfirmModal.vue'
 import Toast from './components/Toast.vue'
+import CodeEditor from './components/CodeEditor.vue'
 import { History as HistoryIcon, X, Trash2, Clock } from 'lucide-vue-next'
 
 const code = ref(EXAMPLES['流程圖'])
@@ -234,12 +235,10 @@ onUnmounted(() => {
           </div>
         </div>
         <div class="editor-container">
-          <textarea 
-            id="editor" 
+          <CodeEditor 
             v-model="code" 
-            spellcheck="false" 
             :placeholder="t.placeholder"
-          ></textarea>
+          />
         </div>
       </section>
 

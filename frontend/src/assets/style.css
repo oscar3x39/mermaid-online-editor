@@ -1,7 +1,7 @@
 /* --- Official Mermaid.live Inspired Themes --- */
 
 :root {
-    /* Default: Official Dark */
+    /* UI 固定深色主題 */
     --primary: #a855f7;
     --primary-hover: #9333ea;
     --bg-dark: #131313;
@@ -13,11 +13,13 @@
     --border: #333333;
     --border-active: #444444;
     --glass-bg: rgba(27, 27, 27, 0.9);
+
+    /* 預覽區背景 - 預設深色 */
     --preview-bg: #131313;
 
-    /* Fonts */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    /* Fonts - 使用系統字體，無外部依賴 */
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
 
     /* Sizes */
     --text-xs: 0.75rem;
@@ -26,42 +28,16 @@
     --text-lg: 1.125rem;
 }
 
+/* 主題只改變預覽區背景色 */
 [data-theme='sun'] {
-    /* Official Light */
-    --primary: #9333ea;
-    --bg-dark: #f3f4f6;
-    --bg-card: #ffffff;
-    --bg-editor: #ffffff;
-    --text-main: #111827;
-    --text-primary: #9333ea;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --border-active: #d1d5db;
-    --glass-bg: rgba(255, 255, 255, 0.9);
     --preview-bg: #ffffff;
 }
 
 [data-theme='forest'] {
-    --primary: #10b981;
-    --bg-dark: #060907;
-    --bg-card: #0c120e;
-    --bg-editor: #0c120e;
-    --text-main: #f0fdf4;
-    --text-primary: #10b981;
-    --text-muted: #86efac;
-    --border: #1a2e21;
     --preview-bg: #060907;
 }
 
 [data-theme='cyber'] {
-    --primary: #f472b6;
-    --bg-dark: #080312;
-    --bg-card: #0f0524;
-    --bg-editor: #0f0524;
-    --text-main: #fdf2f8;
-    --text-primary: #f472b6;
-    --text-muted: #fbcfe8;
-    --border: #2d1b4d;
     --preview-bg: #080312;
 }
 
